@@ -1,0 +1,32 @@
+---
+import '../styles/moon-hero.css';
+import { withBase } from '../utils/withBase';
+---
+
+<div class="moon-hero-root">
+  <video
+    class="moon-hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="Moon-landing themed footage with astronaut activity on the lunar surface"
+  >
+    <source src={withBase('/videos/moon-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="moon-hero-scrim" aria-hidden="true"></div>
+  <div class="moon-hero-cool" aria-hidden="true"></div>
+  <div class="moon-hero-vignette" aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.moon-hero-video').forEach((video) => {
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+    }
+  });
+</script>

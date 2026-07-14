@@ -1,0 +1,50 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { ViewTransitions } from 'astro:transitions';
+import { withBase } from '../utils/withBase';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Space Nerd — shuttles, planets, Earth, and lunar exploration in one elegant reference.',
+} = Astro.props;
+const fullTitle = title === 'Space Nerd' ? title : `${title} · Space Nerd`;
+
+/** Keep Google Fonts URL out of markup — long URLs with many `:` confuse some Astro parsers */
+const fontsCssUrl =
+  'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@500;600;700&display=swap';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href={fontsCssUrl} rel="stylesheet" />
+    <ViewTransitions />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <SiteHeader />
+    <main class="flex-1 overflow-x-hidden">
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      import { initShuttleHeroLoops } from '../scripts/shuttleHeroLoop';
+
+      document.addEventListener('astro:page-load', initShuttleHeroLoops);
+      initShuttleHeroLoops();
+    </script>
+  </body>
+</html>

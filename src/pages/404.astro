@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { withBase } from '../utils/withBase';
+---
+
+<Layout title="Page not found" description="The page you requested does not exist.">
+  <div class="mx-auto max-w-6xl px-5 py-32 text-center md:px-8">
+    <p class="font-mono text-sm text-nebula-dim">404</p>
+    <h1 class="mt-4 font-display text-3xl font-semibold text-white md:text-4xl">Lost in the void</h1>
+    <p class="mx-auto mt-4 max-w-md text-slate-400">That route isn’t in this solar system. Try the home page.</p>
+    <a
+      href={withBase('/')}
+      class="mt-10 inline-flex rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-sm font-medium text-white transition hover:border-nebula/40 hover:bg-nebula/10"
+    >
+      Back home
+    </a>
+  </div>
+</Layout>

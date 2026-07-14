@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CardLink from '../components/CardLink.astro';
+import ShuttleLaunchHero from '../components/ShuttleLaunchHero.astro';
+import { homeCards, homeIntroCaption, homeLayoutDescription } from '../data/home';
+
+const c0 = homeCards[0];
+const c1 = homeCards[1];
+const c2 = homeCards[2];
+const c3 = homeCards[3];
+const c4 = homeCards[4];
+const c5 = homeCards[5];
+const c6 = homeCards[6];
+const c7 = homeCards[7];
+---
+
+<Layout title="Space Nerd" description={homeLayoutDescription}>
+  <section class="page-home-hero">
+    <ShuttleLaunchHero />
+    <div class="page-home-hero-inner">
+      <p class="page-home-hero-eyebrow">Welcome</p>
+      <h1 class="page-home-hero-heading">Space Nerd</h1>
+      <p class="page-home-hero-lead">
+        Shuttles that carried us to orbit. Worlds that define our neighborhood. The Moon, where we first learned to
+        walk beyond Earth.
+      </p>
+    </div>
+  </section>
+
+  <div class="page-home-content">
+    <p class="page-home-intro-caption">{homeIntroCaption}</p>
+
+    <section>
+      <h2 class="page-home-section-title">Start exploring</h2>
+      <p class="page-home-section-lead">
+        Pick a thread, each section is written to be read in minutes, with room to go deeper elsewhere.
+      </p>
+      <div class="page-home-card-grid">
+        <CardLink href={c0.href} title={c0.title} description={c0.description} meta={c0.meta} />
+        <CardLink href={c1.href} title={c1.title} description={c1.description} meta={c1.meta} />
+        <CardLink href={c2.href} title={c2.title} description={c2.description} meta={c2.meta} />
+        <CardLink href={c3.href} title={c3.title} description={c3.description} meta={c3.meta} />
+        <CardLink href={c4.href} title={c4.title} description={c4.description} meta={c4.meta} />
+        <CardLink href={c5.href} title={c5.title} description={c5.description} meta={c5.meta} />
+        <CardLink href={c6.href} title={c6.title} description={c6.description} meta={c6.meta} />
+        <CardLink href={c7.href} title={c7.title} description={c7.description} meta={c7.meta} />
+      </div>
+    </section>
+  </div>
+</Layout>

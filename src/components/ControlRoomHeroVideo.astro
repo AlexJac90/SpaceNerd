@@ -1,0 +1,32 @@
+---
+import '../styles/control-room-hero.css';
+import { withBase } from '../utils/withBase';
+---
+
+<div class="control-room-hero-root">
+  <video
+    class="control-room-hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="Operators working at mission-control style consoles and displays"
+  >
+    <source src={withBase('/videos/control-room-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="control-room-hero-scrim" aria-hidden="true"></div>
+  <div class="control-room-hero-cool" aria-hidden="true"></div>
+  <div class="control-room-hero-vignette" aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.control-room-hero-video').forEach((video) => {
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+    }
+  });
+</script>

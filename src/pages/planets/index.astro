@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import PlanetGlobeCarousel from '../../components/react/PlanetGlobeCarousel';
+import { planets } from '../../data/planets';
+import { withBase } from '../../utils/withBase';
+
+const carouselItems = planets.map((p) => ({ slug: p.slug, name: p.name }));
+---
+
+<Layout
+  title="Planets"
+  description="The Sun’s major worlds — Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, and Neptune."
+>
+  <section
+    class="layout-bleed-x relative w-screen max-w-[100vw] overflow-hidden bg-void-950 pt-6"
+    style="background-image: radial-gradient(ellipse 120% 80% at 85% 12%, rgba(255, 190, 120, 0.09), transparent 42%), radial-gradient(ellipse 90% 70% at 50% 100%, rgba(30, 58, 120, 0.35), transparent 55%), linear-gradient(to bottom, #060814 0%, #0a0d18 45%, #080a12 100%);"
+  >
+    <div class="w-full px-0 sm:px-2 md:px-4">
+      <PlanetGlobeCarousel client:load items={carouselItems} />
+    </div>
+    <div
+      class="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-void-950 to-transparent"
+      aria-hidden="true"
+    >
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-5 pb-24 md:px-8">
+    <PageHero
+      eyebrow="Solar system"
+      title="The planets"
+      subtitle="Eight worlds, eight stories—sizes, skies, and years told in compact, factual snapshots. Use the arrows above to spin through each globe, or open a planet for the full write-up. Dwarf planets and moons have their own deep catalogs beyond this overview."
+    />
+
+    <p class="mb-8 text-center text-xs leading-relaxed text-slate-500 md:text-left">
+      Globe textures: Venus–Neptune and most rocky worlds via
+      <a
+        href="https://www.solarsystemscope.com/textures/"
+        class="text-slate-400 underline decoration-slate-600 underline-offset-2 hover:text-slate-300"
+        >Solar System Scope</a
+      >
+      (see their license); Mercury (2048px derivative,
+      <a
+        href="https://commons.wikimedia.org/wiki/File:Solarsystemscope_texture_8k_mercury.jpg"
+        class="text-slate-400 underline decoration-slate-600 underline-offset-2 hover:text-slate-300"
+        >Wikimedia Commons</a
+      >, CC&nbsp;BY&nbsp;4.0); Mars from
+      <a
+        href="https://github.com/Stellarium/stellarium"
+        class="text-slate-400 underline decoration-slate-600 underline-offset-2 hover:text-slate-300"
+        >Stellarium</a
+      >
+      (<code class="text-slate-600">textures/mars.png</code>, GPL-2.0+). Earth uses the same three.js day map + cloud
+      layering style as the rest of this section.
+    </p>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        planets.map((p) => (
+          <a
+            href={withBase(`/planets/${p.slug}`)}
+            class="group rounded-2xl border border-white/10 bg-void-850/50 p-6 transition hover:border-nebula/35 hover:bg-void-800/70"
+          >
+            <div class="flex items-baseline justify-between gap-2">
+              <h2 class="font-display text-xl font-semibold text-white group-hover:text-nebula-glow">
+                {p.name}
+              </h2>
+              <span class="font-mono text-xs text-slate-500">{p.orbitAU}</span>
+            </div>
+            <p class="mt-1 text-xs uppercase tracking-wider text-nebula-dim">{p.type}</p>
+            <p class="mt-4 text-sm leading-relaxed text-slate-400">{p.blurb}</p>
+            <p class="mt-4 text-sm font-medium text-nebula">Read more →</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

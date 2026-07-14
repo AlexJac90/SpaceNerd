@@ -1,0 +1,40 @@
+---
+import '../styles/shuttle-hero.css';
+import { withBase } from '../utils/withBase';
+
+const heroVideoLabel =
+  'Space shuttle lifting off in a large plume of exhaust and smoke (looping stock footage)';
+---
+
+<div class="shuttle-hero-root">
+  <div class="shuttle-hero-video-stack" role="img" aria-label={heroVideoLabel}>
+    <video
+      class="photo-hero-video hero-video-on-top"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      poster={withBase('/images/shuttle-launch-hero.jpg')}
+      width="1280"
+      height="720"
+      aria-hidden="true"
+    >
+      <source src={withBase('/videos/shuttle-pad-hero.mp4')} type="video/mp4" />
+    </video>
+    <video
+      class="photo-hero-video"
+      muted
+      playsinline
+      preload="auto"
+      poster={withBase('/images/shuttle-launch-hero.jpg')}
+      width="1280"
+      height="720"
+      aria-hidden="true"
+    >
+      <source src={withBase('/videos/shuttle-pad-hero.mp4')} type="video/mp4" />
+    </video>
+  </div>
+  <div class="photo-hero-scrim" aria-hidden="true"></div>
+  <div class="photo-hero-warm" aria-hidden="true"></div>
+  <div class="shuttle-hero-vignette" aria-hidden="true"></div>
+</div>

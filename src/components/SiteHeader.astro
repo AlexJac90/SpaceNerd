@@ -1,0 +1,58 @@
+---
+import { routePathFromUrl, withBase } from '../utils/withBase';
+
+const path = routePathFromUrl(Astro.url.pathname);
+const link = (href: string, label: string) => {
+  const active = path === href || (href !== '/' && path.startsWith(href));
+  return { href: withBase(href), label, active };
+};
+const nav = [
+  link('/', 'Home'),
+  link('/shuttles', 'Shuttles'),
+  link('/control-room', 'Control Room'),
+  link('/planets', 'Planets'),
+  link('/mars', 'Mars'),
+  link('/moon', 'Moon'),
+  link('/iss', 'ISS'),
+  link('/jobs', 'Jobs'),
+  link('/about', 'About'),
+];
+---
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href={withBase('/')} class="site-header-brand inline-flex items-center gap-2">
+      <svg viewBox="0 0 48 48" aria-hidden="true" class="h-5 w-5">
+        <ellipse cx="24" cy="43" rx="12.5" ry="2.2" fill="rgb(255 255 255 / 0.18)" />
+        <path
+          d="M24 4.5c-9.2 0-16.6 7.4-16.6 16.6v11.2c0 4 3.3 7.2 7.2 7.2h18.8c4 0 7.2-3.2 7.2-7.2V21.1C40.6 11.9 33.2 4.5 24 4.5Z"
+          fill="white"
+        />
+        <path d="M16.2 18.1h15.6a5 5 0 0 1 5 5v4.8a5 5 0 0 1-5 5H16.2a5 5 0 0 1-5-5v-4.8a5 5 0 0 1 5-5Z" fill="#b9c7d8" />
+        <path d="M16.8 18.7h14.5a4.1 4.1 0 0 1 4.1 4.1v3.9a4.1 4.1 0 0 1-4.1 4.1H16.8a4.1 4.1 0 0 1-4.1-4.1v-3.9a4.1 4.1 0 0 1 4.1-4.1Z" fill="#8ea0b6" />
+        <path d="M12.3 20.9h-2.9a1.9 1.9 0 0 0-1.9 1.9v5.3a1.9 1.9 0 0 0 1.9 1.9h2.9v-9.1ZM35.7 20.9h2.9a1.9 1.9 0 0 1 1.9 1.9v5.3a1.9 1.9 0 0 1-1.9 1.9h-2.9v-9.1Z" fill="white" />
+        <path d="M18 38h12v3.8H18z" fill="white" />
+        <path d="M17.1 41.8h13.8v1.8H17.1z" fill="white" />
+        <circle cx="16" cy="23.1" r="1.1" fill="white" />
+      </svg>
+      <span>Space Nerd</span>
+    </a>
+    <nav class="site-header-nav">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-full px-3 py-1.5 transition',
+              item.active
+                ? 'bg-white/10 text-white'
+                : 'text-slate-400 hover:bg-white/5 hover:text-slate-100',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

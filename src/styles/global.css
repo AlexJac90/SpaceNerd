@@ -1,0 +1,263 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-void-950 font-sans text-slate-200 antialiased;
+    background-image: radial-gradient(ellipse 100% 80% at 50% -30%, rgba(110, 181, 255, 0.12), transparent),
+      linear-gradient(rgba(110, 181, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(110, 181, 255, 0.03) 1px, transparent 1px);
+    background-size: auto, 40px 40px, 40px 40px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Full-bleed sections (avoid style={{}} in .astro — compiler can choke on object literals) */
+  .layout-bleed-x {
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .hero-animate-delay-1 {
+    animation-delay: 80ms;
+  }
+
+  .hero-animate-delay-2 {
+    animation-delay: 160ms;
+  }
+}
+
+/*
+ * Home page — responsive Tailwind lives here so index.astro has NO `sm:` / `md:` / `lg:` in markup.
+ * Astro’s compiler can mis-parse colons inside HTML class attributes and throw "Expected } but found :".
+ */
+@layer components {
+  .page-home-hero {
+    @apply layout-bleed-x relative flex min-h-[78vh] w-screen max-w-[100vw] items-end justify-center bg-void-900 pb-16 pt-28;
+  }
+
+  @screen md {
+    .page-home-hero {
+      @apply min-h-[85vh] pb-24;
+    }
+  }
+
+  .page-home-hero-inner {
+    @apply relative z-30 mx-auto max-w-3xl px-5 text-center;
+  }
+
+  @screen md {
+    .page-home-hero-inner {
+      @apply px-8;
+    }
+  }
+
+  .page-home-hero-eyebrow {
+    @apply animate-fade-in text-xs font-medium uppercase tracking-[0.25em] text-nebula-glow;
+  }
+
+  .page-home-hero-heading {
+    @apply hero-animate-delay-1 animate-fade-up font-display text-4xl font-semibold tracking-tight text-white text-balance;
+  }
+
+  @screen md {
+    .page-home-hero-heading {
+      @apply text-6xl;
+    }
+  }
+
+  @screen lg {
+    .page-home-hero-heading {
+      @apply text-7xl;
+    }
+  }
+
+  .page-home-hero-lead {
+    @apply hero-animate-delay-2 animate-fade-up mt-5 text-lg leading-relaxed text-slate-200/90;
+  }
+
+  @screen md {
+    .page-home-hero-lead {
+      @apply text-xl;
+    }
+  }
+
+  .page-home-content {
+    @apply mx-auto max-w-6xl px-5 pb-20;
+  }
+
+  @screen md {
+    .page-home-content {
+      @apply px-8;
+    }
+  }
+
+  .page-home-intro-caption {
+    @apply mx-auto mt-16 max-w-2xl text-center text-sm leading-relaxed text-slate-500;
+  }
+
+  .page-home-section-title {
+    @apply mt-20 font-display text-2xl font-semibold text-white;
+  }
+
+  @screen md {
+    .page-home-section-title {
+      @apply text-3xl;
+    }
+  }
+
+  .page-home-section-lead {
+    @apply mt-3 max-w-2xl text-slate-400;
+  }
+
+  .page-home-card-grid {
+    @apply mt-10 grid gap-5;
+  }
+
+  @screen sm {
+    .page-home-card-grid {
+      @apply grid-cols-2;
+    }
+  }
+
+  @screen lg {
+    .page-home-card-grid {
+      @apply grid-cols-3;
+    }
+  }
+
+  /* Site header — no `md:` in SiteHeader.astro markup (Astro parse issues with colons in classes) */
+  .site-header {
+    @apply sticky top-0 z-50 border-b border-white/5 bg-void-950/80 backdrop-blur-md;
+  }
+
+  .site-header-inner {
+    @apply mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4;
+  }
+
+  @screen md {
+    .site-header-inner {
+      @apply px-8;
+    }
+  }
+
+  .site-header-brand {
+    @apply font-display text-lg font-semibold tracking-tight text-white transition hover:text-nebula-glow;
+  }
+
+  @screen md {
+    .site-header-brand {
+      @apply text-xl;
+    }
+  }
+
+  .site-header-nav {
+    @apply flex flex-wrap items-center justify-end gap-1 text-sm;
+  }
+
+  @screen md {
+    .site-header-nav {
+      @apply gap-2 text-[0.95rem];
+    }
+  }
+
+  /* Card link tiles: opacity via plain CSS, not Tailwind bg-color/opacity slash (avoids Astro HTML parse issues). */
+  .card-link {
+    @apply relative block overflow-hidden rounded-2xl border p-6 shadow-lg transition;
+    border-color: rgb(255 255 255 / 0.1);
+    background-color: rgb(15 18 31 / 0.4);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
+  }
+
+  .card-link:hover {
+    border-color: rgb(110 181 255 / 0.3);
+    background-color: rgb(20 24 42 / 0.6);
+  }
+
+  .card-link-glow {
+    @apply pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl transition;
+    background-color: rgb(110 181 255 / 0.1);
+  }
+
+  .group:hover .card-link-glow {
+    background-color: rgb(110 181 255 / 0.2);
+  }
+
+  .card-link-title {
+    @apply font-display text-xl font-semibold text-white transition;
+  }
+
+  .card-link:hover .card-link-title {
+    color: #9fd4ff;
+  }
+
+  .card-link-cta {
+    @apply mt-4 inline-flex items-center text-sm font-medium transition;
+    gap: 0.25rem;
+    color: #6eb5ff;
+  }
+
+  .card-link:hover .card-link-cta {
+    gap: 0.5rem;
+  }
+
+  /* Footer — no slash-opacity or md: in SiteFooter.astro markup */
+  .site-footer {
+    margin-top: 6rem;
+    border-top: 1px solid rgb(255 255 255 / 0.05);
+    background-color: rgb(10 12 20 / 0.5);
+  }
+
+  .site-footer-inner {
+    @apply mx-auto max-w-6xl px-5 py-12;
+  }
+
+  @screen md {
+    .site-footer-inner {
+      @apply px-8;
+    }
+  }
+
+  .site-footer-columns {
+    @apply flex flex-col gap-8;
+  }
+
+  @screen md {
+    .site-footer-columns {
+      @apply flex-row items-start justify-between;
+    }
+  }
+
+  .site-footer-copy {
+    @apply mt-10 text-center text-xs text-slate-600;
+  }
+
+  @screen md {
+    .site-footer-copy {
+      @apply text-left;
+    }
+  }
+}

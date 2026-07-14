@@ -1,0 +1,53 @@
+/* Jobs page hero video */
+
+.jobs-hero-root {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.jobs-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  filter: brightness(0.7) contrast(1.08) saturate(0.95);
+}
+
+.jobs-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(5 6 10 / 0.82) 0%,
+    rgb(5 6 10 / 0.35) 22%,
+    transparent 44%,
+    transparent 60%,
+    rgb(5 6 10 / 0.28) 80%,
+    rgb(5 6 10 / 0.7) 100%
+  );
+}
+
+.jobs-hero-cool {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 120% 70% at 50% 102%, rgba(100, 140, 255, 0.14), transparent 62%);
+}
+
+.jobs-hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgb(5 6 10 / 0.96) 0%,
+    rgb(5 6 10 / 0.58) 14%,
+    rgb(5 6 10 / 0.12) 42%,
+    transparent 52%,
+    rgb(5 6 10 / 0.15) 74%,
+    rgb(5 6 10 / 0.58) 88%,
+    rgb(5 6 10 / 0.9) 100%
+  );
+}

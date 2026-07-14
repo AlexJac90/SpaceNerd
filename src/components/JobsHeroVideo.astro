@@ -1,0 +1,32 @@
+---
+import '../styles/jobs-hero.css';
+import { withBase } from '../utils/withBase';
+---
+
+<div class="jobs-hero-root">
+  <video
+    class="jobs-hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="Engineering and coding work that represents technical careers in space programs"
+  >
+    <source src={withBase('/videos/jobs-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="jobs-hero-scrim" aria-hidden="true"></div>
+  <div class="jobs-hero-cool" aria-hidden="true"></div>
+  <div class="jobs-hero-vignette" aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.jobs-hero-video').forEach((video) => {
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+    }
+  });
+</script>

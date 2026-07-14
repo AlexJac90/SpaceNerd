@@ -1,0 +1,32 @@
+---
+import '../styles/mars-hero.css';
+import { withBase } from '../utils/withBase';
+---
+
+<div class="mars-hero-root">
+  <video
+    class="mars-hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="Astronauts and robotic exploration visuals on a Mars-like landscape"
+  >
+    <source src={withBase('/videos/mars-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="mars-hero-scrim" aria-hidden="true"></div>
+  <div class="mars-hero-warm" aria-hidden="true"></div>
+  <div class="mars-hero-vignette" aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.mars-hero-video').forEach((video) => {
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+    }
+  });
+</script>

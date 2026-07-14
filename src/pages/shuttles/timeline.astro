@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Timeline from '../../components/Timeline.astro';
+import { stsProgramTimeline } from '../../data/timelines';
+import { withBase } from '../../utils/withBase';
+---
+
+<Layout
+  title="Shuttle timeline"
+  description="Key milestones in NASA’s Space Shuttle program from the 1970s through the final flight in 2011."
+>
+  <div class="mx-auto max-w-6xl px-5 pb-24 md:px-8">
+    <nav class="pt-8 text-sm text-slate-500">
+      <a href={withBase('/shuttles')} class="text-nebula hover:underline">&larr; Shuttles</a>
+    </nav>
+    <PageHero
+      eyebrow="Chronology"
+      title="Space Shuttle program"
+      subtitle="A high-level arc of the STS era—meant as orientation, not a mission-by-mission almanac."
+    />
+    <Timeline events={stsProgramTimeline} />
+  </div>
+</Layout>

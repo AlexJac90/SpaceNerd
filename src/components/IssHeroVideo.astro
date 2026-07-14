@@ -1,0 +1,32 @@
+---
+import '../styles/iss-hero.css';
+import { withBase } from '../utils/withBase';
+---
+
+<div class="iss-hero-root">
+  <video
+    class="iss-hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-label="International Space Station orbiting above Earth"
+  >
+    <source src={withBase('/videos/iss-hero.mp4')} type="video/mp4" />
+  </video>
+  <div class="iss-hero-scrim" aria-hidden="true"></div>
+  <div class="iss-hero-cool" aria-hidden="true"></div>
+  <div class="iss-hero-vignette" aria-hidden="true"></div>
+</div>
+
+<script>
+  document.querySelectorAll('.iss-hero-video').forEach((video) => {
+    if (!(video instanceof HTMLVideoElement)) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.removeAttribute('loop');
+    }
+  });
+</script>
