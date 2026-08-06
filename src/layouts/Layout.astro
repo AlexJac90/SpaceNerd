@@ -42,9 +42,15 @@ const fontsCssUrl =
     <SiteFooter />
     <script>
       import { initShuttleHeroLoops } from '../scripts/shuttleHeroLoop';
+      import { initPageHeroVideos } from '../scripts/pageHeroVideos';
 
-      document.addEventListener('astro:page-load', initShuttleHeroLoops);
-      initShuttleHeroLoops();
+      function initHeroMedia() {
+        initShuttleHeroLoops();
+        initPageHeroVideos();
+      }
+
+      document.addEventListener('astro:page-load', initHeroMedia);
+      initHeroMedia();
     </script>
   </body>
 </html>

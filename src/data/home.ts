@@ -8,9 +8,6 @@ export type HomeCard = {
 export const homeLayoutDescription =
   'Explore space shuttles, the solar system, and lunar exploration — clear, modern, and calm.';
 
-export const homeIntroCaption =
-  'Home hero — looping HD stock video of a shuttle-style launch with a real exhaust plume (Mixkit, item 45230); still poster is NASA KSC-2009-2069.';
-
 export const homeCards: HomeCard[] = [
   {
     href: '/shuttles',

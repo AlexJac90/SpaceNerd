@@ -11,6 +11,7 @@ import { withBase } from '../utils/withBase';
     loop
     playsinline
     preload="auto"
+    poster={withBase('/images/iss-hero.jpg')}
     aria-label="International Space Station orbiting above Earth"
   >
     <source src={withBase('/videos/iss-hero.mp4')} type="video/mp4" />
@@ -19,14 +20,3 @@ import { withBase } from '../utils/withBase';
   <div class="iss-hero-cool" aria-hidden="true"></div>
   <div class="iss-hero-vignette" aria-hidden="true"></div>
 </div>
-
-<script>
-  document.querySelectorAll('.iss-hero-video').forEach((video) => {
-    if (!(video instanceof HTMLVideoElement)) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.pause();
-      video.removeAttribute('autoplay');
-      video.removeAttribute('loop');
-    }
-  });
-</script>

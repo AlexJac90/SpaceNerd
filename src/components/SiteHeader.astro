@@ -19,7 +19,7 @@ const nav = [
 ];
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="site-header-inner">
     <a href={withBase('/')} class="site-header-brand inline-flex items-center gap-2">
       <svg viewBox="0 0 48 48" aria-hidden="true" class="h-5 w-5">
@@ -37,16 +37,30 @@ const nav = [
       </svg>
       <span>Space Nerd</span>
     </a>
-    <nav class="site-header-nav">
+
+    <button
+      type="button"
+      class="site-header-menu-btn"
+      data-site-menu-btn
+      aria-expanded="false"
+      aria-controls="site-header-menu"
+      aria-label="Open menu"
+    >
+      <span class="site-header-menu-icon" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+    </button>
+
+    <nav class="site-header-nav" aria-label="Primary">
       {
         nav.map((item) => (
           <a
             href={item.href}
             class:list={[
-              'rounded-full px-3 py-1.5 transition',
-              item.active
-                ? 'bg-white/10 text-white'
-                : 'text-slate-400 hover:bg-white/5 hover:text-slate-100',
+              'site-header-link',
+              item.active ? 'site-header-link-active' : 'site-header-link-idle',
             ]}
           >
             {item.label}
@@ -55,4 +69,100 @@ const nav = [
       }
     </nav>
   </div>
+
+  <nav
+    class="site-header-panel"
+    id="site-header-menu"
+    data-site-menu-panel
+    aria-label="Mobile"
+    aria-hidden="true"
+  >
+    <div class="site-header-panel-inner">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'site-header-panel-link',
+              item.active ? 'site-header-panel-link-active' : 'site-header-panel-link-idle',
+            ]}
+            tabindex="-1"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
 </header>
+
+<script>
+  function getHeader() {
+    const header = document.querySelector('[data-site-header]');
+    return header instanceof HTMLElement ? header : null;
+  }
+
+  function setPanelFocusable(panel: HTMLElement, open: boolean) {
+    panel.querySelectorAll('a').forEach((link) => {
+      if (link instanceof HTMLAnchorElement) {
+        link.tabIndex = open ? 0 : -1;
+      }
+    });
+  }
+
+  function closeMenu(header: HTMLElement | null = getHeader()) {
+    if (!header) return;
+    const btn = header.querySelector('[data-site-menu-btn]');
+    const panel = header.querySelector('[data-site-menu-panel]');
+    if (!(btn instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+    header.classList.remove('is-menu-open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Open menu');
+    panel.setAttribute('aria-hidden', 'true');
+    setPanelFocusable(panel, false);
+  }
+
+  function openMenu(header: HTMLElement) {
+    const btn = header.querySelector('[data-site-menu-btn]');
+    const panel = header.querySelector('[data-site-menu-panel]');
+    if (!(btn instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) return;
+    header.classList.add('is-menu-open');
+    btn.setAttribute('aria-expanded', 'true');
+    btn.setAttribute('aria-label', 'Close menu');
+    panel.setAttribute('aria-hidden', 'false');
+    setPanelFocusable(panel, true);
+  }
+
+  function initSiteHeaderMenu() {
+    closeMenu();
+
+    const w = window as Window & { __spaceNerdHeaderMenuBound?: boolean };
+    if (w.__spaceNerdHeaderMenuBound) return;
+    w.__spaceNerdHeaderMenuBound = true;
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const header = getHeader();
+      if (!header) return;
+
+      if (target.closest('[data-site-menu-btn]')) {
+        if (header.classList.contains('is-menu-open')) closeMenu(header);
+        else openMenu(header);
+        return;
+      }
+
+      if (target.closest('[data-site-menu-panel] a')) {
+        closeMenu(header);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
+
+  document.addEventListener('astro:page-load', initSiteHeaderMenu);
+  initSiteHeaderMenu();
+</script>
